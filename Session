@@ -1,0 +1,36 @@
+function userlogin()
+	{
+		$this->load->model("Login_model");
+		$uname=$this->input->post("uname");
+		$password=$this->input->post("password");
+		$qry=$this->Login_model->u_login($uname,$password);
+		if($qry)
+		{
+			//$sess_array=array();
+			foreach($qry as $row)
+			{
+				// $sess_array=array("id"=>$row->id,"uname"=>$row->uname);
+				//  $this->session->set_userdata("sess_name",$sess_array);
+				 // echo $this->session->userdata("sess_name");
+				 $this->session->set_userdata("sess_name",$uname);
+				 redirect("Home");
+			}
+		}
+
+	}
+  
+  --------------------------------------
+  Fetch:-
+  <?php echo $this->session->userdata("sess_name"); ?>
+  ------------
+  <?php
+	if(!$this->session->userdata("sess_name"))
+	{
+    echo anchor("Home/login","Login");
+	}
+	else
+	{
+		echo anchor("Home/logout","Logout");
+	}
+
+	?>
